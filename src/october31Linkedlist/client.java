@@ -1,4 +1,4 @@
-package October31;
+package october31Linkedlist;
 
 public class client {
 
