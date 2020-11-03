@@ -21,17 +21,18 @@ public class client {
 //		l1.display();
 //		l1.reversePI();
 //		l1.display();
-		
+
 		l1.Addlast(10);
 		l1.Addlast(20);
 		l1.Addlast(30);
-		l1.Addlast(30);
-		l1.Addlast(20);
-		l1.Addlast(10);
+		l1.Addlast(40);
+		l1.Addlast(50);
+		l1.Addlast(60);
 
+		l1.fold();
+		l1.display();
 
-
-		System.out.println(l1.isPalindrome());
+//		System.out.println(l1.isPalindrome());
 
 //		LinkedList l2 = new LinkedList();
 //		l2.addFirst(100);

@@ -236,10 +236,9 @@ public class LinkedList {
 		if (right == null) {
 			return true;
 		}
-		
-		boolean bl = isPalindromeHelper(hp, right.next,level+1);
-		
-		
+
+		boolean bl = isPalindromeHelper(hp, right.next, level + 1);
+
 		if (bl == false) {
 			return false;
 		}
@@ -249,6 +248,109 @@ public class LinkedList {
 		hp.left = hp.left.next;
 
 		return true;
+	}
+
+	public int mid() {
+		Node fast = this.head;
+		Node slow = this.head;
+		while (fast != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+
+		return slow.data;
+	}
+
+	public int kFromLast(int k) {
+		Node fast = this.head;
+		Node slow = this.head;
+
+		for (int i = 0; i < k; i++) {
+			fast = fast.next;
+		}
+
+		while (fast != null) {
+			fast = fast.next;
+			slow = slow.next;
+		}
+
+		return slow.data;
+	}
+
+	public void fold() {
+		Helper hp = new Helper();
+		hp.left = this.head;
+		Node right = this.head;
+		fold(hp, right, 0);
+	}
+
+	private void fold(Helper hp, Node right, int floor) {
+		if (right == null) {
+			return;
+		}
+
+		fold(hp, right.next, floor + 1);
+		if (floor > size / 2) {
+			Node currLeftNext = hp.left.next;
+			hp.left.next = right;
+			right.next = currLeftNext;
+			hp.left = currLeftNext;
+		}
+
+		if (floor == size / 2) {
+//			even
+			right.next = null;
+			tail = right;
+		}
+	}
+
+	public void reverDR() {
+		Helper hp = new Helper();
+		hp.left = this.head;
+		Node right = this.head;
+		reverDR(hp, right, 0);
+	}
+
+	private void reverDR(Helper hp, Node right, int floor) {
+		if (right == null) {
+			return;
+		}
+
+		reverDR(hp, right.next, floor + 1);
+		if (floor >= size / 2) {
+			int temp = hp.left.data;
+			hp.left.data = right.data;
+			right.data = temp;
+			hp.left = hp.left.next;
+		}
+	}
+
+	private Node left;
+
+	public void fold2() {
+		left = this.head;
+		Node right = this.head;
+		fold2(right, 0);
+	}
+
+	private void fold2(Node right, int floor) {
+		if (right == null) {
+			return;
+		}
+
+		fold2(right.next, floor + 1);
+		if (floor > size / 2) {
+			Node currLeftNext = left.next;
+			left.next = right;
+			right.next = currLeftNext;
+			left = currLeftNext;
+		}
+
+		if (floor == size / 2) {
+//			even
+			right.next = null;
+			tail = right;
+		}
 	}
 
 }
