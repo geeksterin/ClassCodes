@@ -24,6 +24,18 @@ public class LinkedList {
 		size++;
 	}
 
+	public void AddLastNode(Node node) {
+		if (head == null) {
+			head = node;
+			tail = node;
+		} else {
+			tail.next = node;
+			tail = node;
+		}
+		tail.next = null;
+		size++;
+	}
+
 	public void display() {
 		Node temp = head;
 		while (temp != null) {
@@ -85,6 +97,23 @@ public class LinkedList {
 		} else {
 			System.out.println("nothing to remove");
 		}
+	}
+
+	public Node removeFirstNode() {
+		if (size == 0) {
+			return null;
+		}
+		Node toReturn;
+		toReturn = head;
+		if (size == 1) {
+			head = null;
+			tail = null;
+		} else {
+			head = head.next;
+		}
+		toReturn.next = null;
+		size--;
+		return toReturn;
 	}
 
 	public void removeLast() {
@@ -351,6 +380,115 @@ public class LinkedList {
 			right.next = null;
 			tail = right;
 		}
+	}
+
+	public static LinkedList mergeTwoSortedLists(LinkedList l1, LinkedList l2) {
+		LinkedList res = new LinkedList();
+		Node temp1 = l1.head;
+		Node temp2 = l2.head;
+		while (temp1 != null && temp2 != null) {
+			int val1 = temp1.data;
+			int val2 = temp2.data;
+			if (val1 < val2) {
+				res.Addlast(val1);
+				temp1 = temp1.next;
+			} else {
+				res.Addlast(val2);
+				temp2 = temp2.next;
+			}
+		}
+
+		while (temp1 != null) {
+			int val = temp1.data;
+			res.Addlast(val);
+			temp1 = temp1.next;
+		}
+
+		while (temp2 != null) {
+			int val = temp2.data;
+			res.Addlast(val);
+			temp2 = temp2.next;
+		}
+
+		return res;
+	}
+
+	public void removeDuplicates() {
+		LinkedList list = new LinkedList();
+		while (this.size != 0) {
+			if (list.size == 0 || list.tail.data != this.head.data) {
+				list.AddLastNode(this.removeFirstNode());
+			} else {
+				this.removeFirstNode();
+			}
+		}
+
+		this.head = list.head;
+		this.tail = list.tail;
+		this.size = list.size;
+	}
+
+	public void oddEvenSeperation() {
+		LinkedList odd = new LinkedList();
+		LinkedList even = new LinkedList();
+		while (this.size > 0) {
+			if (this.head.data % 2 == 0) {
+				even.AddLastNode(this.removeFirstNode());
+			} else {
+				odd.AddLastNode(this.removeFirstNode());
+			}
+		}
+
+		if (odd.size > 0 && even.size > 0) {
+			odd.tail.next = even.head;
+			this.head = odd.head;
+			this.tail = even.tail;
+			this.size = odd.size + even.size;
+		} else if (odd.size > 0) {
+			this.head = odd.head;
+			this.tail = odd.tail;
+			this.size = odd.size;
+		} else {
+			this.head = even.head;
+			this.tail = even.tail;
+			this.size = even.size;
+		}
+	}
+
+	public static void makeCycle(LinkedList list) {
+		list.tail.next = list.head;
+	}
+
+	public static boolean isCycle(LinkedList list) {
+		Node slow = list.head;
+		Node fast = list.head;
+		while (slow != null && fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (slow == fast) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void reversePR() {
+
+		reversePR(head);
+		Node temp = tail;
+		tail = head;
+		head = temp;
+		tail.next = null;
+
+	}
+
+	private void reversePR(Node node) {
+		if (node.next == null) {
+			return;
+		}
+		reversePR(node.next);
+		node.next.next = node;
 	}
 
 }
