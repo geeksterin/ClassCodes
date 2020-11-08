@@ -61,6 +61,17 @@ public class LinkedList {
 		size++;
 	}
 
+	private void AddFirstNode(Node node) {
+		if (size == 0) {
+			head = node;
+			tail = node;
+		} else {
+			node.next = head;
+			head = node;
+		}
+		size++;
+	}
+
 	public void addAt(int d, int pos) {
 		if (pos < 0 || pos > size) {
 			System.out.println("pos is out of bound");
@@ -489,6 +500,30 @@ public class LinkedList {
 		}
 		reversePR(node.next);
 		node.next.next = node;
+	}
+
+	public void kReverse(int k) {
+		LinkedList ans = new LinkedList();
+		while (this.size > 0) {
+			LinkedList temp = new LinkedList();
+			for (int i = 0; i < k && this.size > 0; i++) {
+				temp.AddFirstNode(this.removeFirstNode());
+			}
+
+			if (ans.head == null) {
+				ans.head = temp.head;
+				ans.tail = temp.tail;
+			}
+			{
+				ans.tail.next = temp.head;
+				ans.tail = temp.tail;
+			}
+			ans.size += temp.size;
+		}
+
+		this.head = ans.head;
+		this.tail = ans.tail;
+		this.size = ans.size;
 	}
 
 }

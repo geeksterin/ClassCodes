@@ -4,7 +4,7 @@ public class StringClass {
 
 	public static void main(String[] args) {
 //		String str = "abcdefgh";
-//		String str2 = new String("Geekster");
+		String str2 = new String("Geekster");
 
 //		Printing
 //		System.out.println(str);
