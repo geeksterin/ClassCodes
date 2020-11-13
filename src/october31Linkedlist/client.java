@@ -24,16 +24,19 @@ public class client {
 //		l1.reversePI();
 //		l1.display();
 
-//		l1.Addlast(1);
-//		l1.Addlast(10);
-//		l1.Addlast(2);
-//		l1.Addlast(20);
-//		l1.Addlast(20);
-//		l1.Addlast(3);
-//		l1.Addlast(30);
-//		l1.Addlast(4);
-//		l1.Addlast(5);
-//		l1.Addlast(60);
+		l1.Addlast(1);
+		l1.Addlast(2);
+		l1.Addlast(3);
+		l1.Addlast(4);
+		l1.Addlast(5);
+		l1.Addlast(6);
+		l1.Addlast(7);
+		l1.Addlast(8);
+		l1.Addlast(9);
+		l1.Addlast(10);
+		l1.display();
+		l1.kReverse(3);
+		l1.display();
 
 //		l1.fold();
 //		l1.display();
@@ -63,20 +66,20 @@ public class client {
 //		l2.display();
 //		System.out.println(l2);
 //		l2.printThis();
-		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("Aman");
-		list1.add("Geekster");
-		list1.add("Cs");
-		
-		ArrayList<String> list2 = new ArrayList<>();
-		list2.add("Gfg");
-		list2.add("Dixita");
-		list2.add("Physics");
-		
-		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-		list.add(list1);
-		list.add(list2);
-		System.out.println(list.get(1).get(1));
+//		ArrayList<String> list1 = new ArrayList<>();
+//		list1.add("Aman");
+//		list1.add("Geekster");
+//		list1.add("Cs");
+//		
+//		ArrayList<String> list2 = new ArrayList<>();
+//		list2.add("Gfg");
+//		list2.add("Dixita");
+//		list2.add("Physics");
+//		
+//		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+//		list.add(list1);
+//		list.add(list2);
+//		System.out.println(list.get(1).get(1));
 	}
 
 	public static LinkedList mergeTwoSortedLists2(LinkedList l1, LinkedList l2) {
