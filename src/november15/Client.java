@@ -8,8 +8,11 @@ public class Client {
 //		int[] arr = {10,20,-1,30,-1,40,-1,-1};
 		GenericTree gt = new GenericTree(arr);
 		gt.display();
+		System.out.println(gt.diameter());
+//		gt.printLevelOrderZigZag();
+//		gt.linearise2();
 //		System.out.println(gt.nodeToRootPath(120));
-		gt.display();
+//		gt.display();
 
 	}
 
