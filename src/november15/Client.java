@@ -7,9 +7,10 @@ public class Client {
 				-1 };
 //		int[] arr = {10,20,-1,30,-1,40,-1,-1};
 		GenericTree gt = new GenericTree(arr);
-		gt.display();
+//		gt.postOrder();
+		gt.printLevelOrderZigZag();
 //		System.out.println(gt.nodeToRootPath(120));
-		gt.display();
+//		gt.display();
 
 	}
 
