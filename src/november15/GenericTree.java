@@ -231,4 +231,61 @@ public class GenericTree {
 			}
 		}
 	}
+	
+	private void mirror(Node root) {
+		for(Node n : root.children) {
+			mirror(n);
+		}
+		Collections.reverse(root.children);
+	}
+	
+	public void mirror() {
+		mirror(root);
+	}
+	
+	public int LCA(int a,int b) {
+		//verify all conditions
+		
+		// get path root to a aPath
+		ArrayList<Integer> aPath = nodeToRootPath(a);	
+		Collections.reverse(aPath);
+		// get path root to b bPath
+		ArrayList<Integer> bPath = nodeToRootPath(b);
+		Collections.reverse(bPath);
+		// compare the paths
+		int i = 0;
+		while(i < aPath.size() && i < bPath.size() && aPath.get(i) == bPath.get(i)) {
+			i++;
+		}
+	
+		return aPath.get(i-1);
+	}
+	
+	private void linearize(Node root) {
+		// linearise all node
+		for(Node child:root.children) {
+			linearize(child);
+		}
+		
+		for(int i = root.children.size()-1;i>0;i--) {
+			Node lc = root.children.remove(i);
+			Node sl = root.children.get(i-1);
+			Node slTail = getTail(sl);
+			slTail.children.add(lc);
+		}
+		
+	}
+	private Node getTail(Node node) {
+		Node temp = node;
+		while(temp.children.size() != 0) {
+			temp = temp.children.get(0);
+		}
+		return temp;
+	}
+	
+	public void linarize() {
+		linearize(root);
+	}
+	
 }
+
