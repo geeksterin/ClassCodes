@@ -12,7 +12,7 @@ public class printAllPermutation {
 		for(int i=0;i<ques.length();i++) {
 			String newQ = ques.substring(0,i)+ques.substring(i+1);
 							//starting          //ending
-			Sting newA = ans+ques.charAt(i);
+			String newA = ans+ques.charAt(i);
 			
 			printAllP(newQ,newA);
 		}

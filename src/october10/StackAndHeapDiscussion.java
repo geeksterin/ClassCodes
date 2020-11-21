@@ -1,5 +1,7 @@
 package october10;
 
+import java.util.Scanner;
+
 public class StackAndHeapDiscussion {
 
 	public static void fun(int val) {

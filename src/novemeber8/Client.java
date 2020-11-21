@@ -49,7 +49,7 @@ public class Client {
 //		dq.enqueue(100);
 //		dq.display();
 		Base b = new Derived();
-		Derived d = new Base();
+		Derived d = (Derived) new Base();
 //		b.fun();
 //		System.out.println(b.aDerived);
 //		System.out.println(b.aBase);

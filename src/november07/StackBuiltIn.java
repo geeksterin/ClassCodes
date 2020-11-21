@@ -19,7 +19,7 @@ public class StackBuiltIn {
 		s.pop();
 		//it will print true
 		System.out.println(s.empty());
-		s.size()
+		s.size();
 	}
 	
 }

@@ -286,6 +286,37 @@ public class GenericTree {
 	public void linarize() {
 		linearize(root);
 	}
+
+	// starting mein pass kya karenge
+	private boolean isSymmetric(Node n1,Node n2){
+		if (n1.data != n2.data){
+			return false;
+		}
+		if(n1.children.size() != n2.children.size()){
+			return false;
+		}
+
+		int left = 0;
+		int right = n2.children.size() -1 ;
+		while(left < n1.children.size()){
+			Node lc = n1.children.get(left);
+			Node rc = n2.children.get(right);
+
+			boolean isSymmetricLeftRight = isSymmetric(lc,rc);
+			if(isSymmetricLeftRight == false){
+				return false;
+			}
+			left++;
+			right--;
+		}
+		return true;
+	}
+
+	public boolean isSymmetric(){
+		return isSymmetric(root,root);
+	}
+
+
 	
 }
 
