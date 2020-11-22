@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-class Solution {
+class HistogramArea {
     public int largestRectangleArea(int[] h) {
         Stack<Integer> st=new Stack<>();
         st.push(-1);
@@ -26,6 +26,5 @@ class Solution {
            
         }
         return ma;
-       
     }
 }

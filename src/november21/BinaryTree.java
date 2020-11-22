@@ -2,6 +2,8 @@ package november21;
 
 import november15.GenericTree;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class BinaryTree {
@@ -9,7 +11,7 @@ public class BinaryTree {
     Node root;
     int size;
 
-    private class Node{
+    public class Node{
         int data;
         Node left;
         Node right;
@@ -234,6 +236,141 @@ public class BinaryTree {
 
     }
 
+    public ArrayList<Node> PathNodeToRoot(int data){
+        return PathNodeToRoot(root,data);
+    }
 
+    private ArrayList<Node> PathNodeToRoot(Node node,int data){
+        // base case
+        // if node is null return empty list
+        if(node == null){
+            ArrayList<Node> ls = new ArrayList<>();
+            return ls;
+        }
+
+        // if data is found return list with currelement
+        if(node.data == data){
+            ArrayList<Node> ls = new ArrayList<>();
+            ls.add(node);
+            return ls;
+        }
+
+        // left pe call
+        ArrayList<Node> lr = PathNodeToRoot(node.left, data);
+        if(lr.size() > 0){
+            lr.add(node);
+            return lr;
+        }
+
+        ArrayList<Node> rr = PathNodeToRoot(node.right,data);
+        if(rr.size() > 0){
+            rr.add(node);
+            return rr;
+        }
+
+        return new ArrayList<Node>();
+
+    }
+
+    public void kthDesendentofNode(int data,int k){
+        findNodeAndPrint(root,data,k);
+    }
+
+    private void findNodeAndPrint(Node node,int data,int k){
+        //base case
+        // node is null - return
+        if(node == null){
+            return;
+        }
+        // node.data is data - extra function printkthdesendent
+        if(node.data == data){
+            printKthDesendent(node,k);
+            return;
+        }
+        //call to left
+        findNodeAndPrint(node.left,data,k);
+        // call to right
+        findNodeAndPrint(node.right,data,k);
+    }
+
+    private void printKthDesendent(Node node, int k){
+        if(node == null){
+            return ;
+        }
+        if(k == 0){
+            System.out.print(node.data);
+            return;
+        }
+        else{
+            printKthDesendent(node.left,k-1);
+            printKthDesendent(node.right,k-1);
+        }
+    }
+
+    public int maxWidth(){
+        return maxWidth(root).maxdiameter;
+    }
+
+    class pair{
+        int height;
+        int maxdiameter;
+        pair(int h,int md){
+            height = h;
+            maxdiameter = md;
+        }
+    }
+
+    public pair maxWidth(Node node){
+        // base case
+        if(node == null){
+            return new pair(0,0);
+        }
+
+        pair p1 = maxWidth(node.left);
+        pair p2  = maxWidth(node.right);
+
+        // calculate height
+        int height = Math.max(p1.height,p2.height)+1;
+        int mydiameter = p1.height + p2.height + 1;
+        int maxDiameter = Math.max(mydiameter, Math.max(p1.maxdiameter,p2.maxdiameter));
+        return new pair(height,maxDiameter);
+    }
+
+    class pair1{
+        Node node;
+        int state;
+        pair1(Node n, int s){
+            node = n;
+            state = s;
+        }
+    }
+
+    public void preIter(){
+        Stack<pair1> stack = new Stack<pair1>();
+        pair1 p1 = new pair1(root,0);
+        stack.push(p1);
+        while(stack.isEmpty() == false){
+            pair1 topPair = stack.peek();
+            if(topPair.state == 0){
+                System.out.print(topPair.node.data + " ");
+                topPair.state ++ ;
+            }
+            else if (topPair.state == 1){
+                if(topPair.node.left != null){
+                    stack.push(new pair1(topPair.node.left,0));
+                }
+                topPair.state ++ ;
+            }
+            else if(topPair.state == 2){
+                if (topPair.node.right != null){
+                    stack.push(new pair1(topPair.node.right,0));
+                }
+                topPair.state++;
+            }
+            else{
+                stack.pop();
+            }
+        }
+    }
 
 }
