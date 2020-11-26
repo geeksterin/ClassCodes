@@ -132,4 +132,107 @@ public class BST {
 		replaceWithSumofLargerNodes(node.left);
 	}
 
+	public void add(int data) {
+		root = add(root, data);
+	}
+
+	private Node add(Node node, int data) {
+
+		if (node == null) {
+			Node temp = new Node();
+			temp.data = data;
+			return temp;
+		}
+
+		if (data > node.data) {
+			node.right = add(node.right, data);
+		} else {
+			node.left = add(node.left, data);
+		}
+
+		return node;
+	}
+
+	public void add2(int data) {
+		add(root, data);
+	}
+
+	public void add2(Node node, int data) {
+		if (data > node.data) {
+			if (node.right == null) {
+				Node temp = new Node();
+				temp.data = data;
+				node.right = temp;
+				return;
+			}
+			add2(node.right, data);
+		} else {
+			if (node.left == null) {
+				Node temp = new Node();
+				temp.data = data;
+				node.left = temp;
+				return;
+			}
+			add2(node.left, data);
+		}
+	}
+
+	public void remove(int data) {
+		root = remove(root, data);
+	}
+
+	private Node remove(Node node, int data) {
+		if (data > node.data) {
+			node.right = remove(node.right, data);
+		} else if (data < node.data) {
+			node.left = remove(node.left, data);
+		} else {
+//			no child
+			if (node.left == null && node.right == null) {
+				return null;
+			} else if (node.right == null) { // only left child
+				return node.left;
+			} else if (node.left == null) { // only right child
+				return node.right;
+			} else {
+				int lmax = max(node.left); // both the childs
+				node.data = lmax;
+				node.left = remove(node.left, lmax);
+			}
+		}
+
+		return node;
+	}
+
+	public int lca(int d1, int d2) {
+		return lca(root, d1, d2);
+	}
+
+	private int lca(Node node, int d1, int d2) {
+		if (node.data < d1 && node.data < d2) {
+			return lca(node.right, d1, d2);
+		} else if (node.data > d1 && node.data > d2) {
+			return lca(node.left, d1, d2);
+		} else {
+			return node.data;
+		}
+	}
+
+	public void targetSumPair(int sum) {
+		targetSumPair(root, sum);
+	}
+
+	public void targetSumPair(Node node, int sum) {
+		if (node == null) {
+			return;
+		}
+		if (find(sum - node.data)) {
+			if (node.data < (sum - node.data)) {
+				System.out.println(node.data + " " + (sum - node.data));
+			}
+		}
+		targetSumPair(node.left, sum);
+		targetSumPair(node.right, sum);
+	}
+
 }

@@ -24,19 +24,21 @@ public class client {
 //		l1.reversePI();
 //		l1.display();
 
-		l1.Addlast(1);
-		l1.Addlast(2);
-		l1.Addlast(3);
-		l1.Addlast(4);
-		l1.Addlast(5);
-		l1.Addlast(6);
-		l1.Addlast(7);
-		l1.Addlast(8);
-		l1.Addlast(9);
-		l1.Addlast(10);
-		l1.display();
-		l1.kReverse(3);
-		l1.display();
+//		l1.Addlast(1);
+//		l1.Addlast(2);
+//		l1.Addlast(3);
+//		l1.Addlast(4);
+//		l1.Addlast(5);
+//		l1.Addlast(6);
+//		l1.Addlast(7);
+//		l1.Addlast(8);
+//		l1.Addlast(9);
+//		l1.Addlast(10);
+//		l1.display();
+//		l1.kReverse(3);
+//		l1.display();
+
+		l1.kReverseHelper();
 
 //		l1.fold();
 //		l1.display();

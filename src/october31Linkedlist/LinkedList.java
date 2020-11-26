@@ -4,6 +4,14 @@ public class LinkedList {
 	public class Node {
 		int data;
 		Node next;
+
+		public Node() {
+
+		}
+
+		public Node(int d) {
+			data = d;
+		}
 	}
 
 	private Node head;
@@ -69,6 +77,7 @@ public class LinkedList {
 			node.next = head;
 			head = node;
 		}
+		tail.next = null;
 		size++;
 	}
 
@@ -502,7 +511,7 @@ public class LinkedList {
 		node.next.next = node;
 	}
 
-	public void kReverse(int k) {
+	public void kReverse2(int k) {
 		LinkedList ans = new LinkedList();
 		while (this.size > 0) {
 			LinkedList temp = new LinkedList();
@@ -524,6 +533,44 @@ public class LinkedList {
 		this.head = ans.head;
 		this.tail = ans.tail;
 		this.size = ans.size;
+	}
+
+	public void kReverseHelper() {
+		Node head = new Node(10);
+		head.next = new Node(20);
+		head.next.next = new Node(30);
+		head.next.next.next = new Node(40);
+		head.next.next.next.next = new Node(50);
+		head.next.next.next.next.next = new Node(60);
+		head = kReverse(head, 3);
+		while (head != null) {
+			System.out.println(head.data);
+			head = head.next;
+		}
+	}
+
+	public Node kReverse(Node node, int N) {
+		LinkedList ans = new LinkedList();
+		while (node != null) {
+			LinkedList temp = new LinkedList();
+
+			for (int i = 0; node != null && i < N; i++) {
+				Node nodeNext = node.next;
+				temp.AddFirstNode(node);
+				node = nodeNext;
+			}
+			if (ans.head == null) {
+				ans.head = temp.head;
+				ans.tail = temp.tail;
+				ans.tail.next = null;
+			} else {
+				ans.tail.next = temp.head;
+				ans.tail = temp.tail;
+				ans.tail.next = null;
+			}
+		}
+
+		return ans.head;
 	}
 
 }
