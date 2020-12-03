@@ -25,8 +25,50 @@ public class HMap {
 //		O(n)
 		ArrayList<String> list = new ArrayList<String>(hmap.keySet());
 		System.out.println(list);
-		
+
 		highestFrequenceyCharacter("geekster");
+
+		int[] one = { 5, 1, 3, 1, 2, 2, 1 };
+		int[] two = { 2, 2, 4, 1, 1, 5, 2 };
+		getCommonElements2(one, two);
+	}
+
+	public static void getCommonElements1(int[] one, int[] two) {
+		HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer>();
+		for (int val : one) {
+			hmap.put(val, hmap.getOrDefault(val, 0) + 1);
+		}
+
+		for (int val : two) {
+			if (hmap.containsKey(val)) {
+				System.out.print(val + " ");
+				hmap.remove(val);
+			}
+		}
+
+		System.out.println();
+	}
+
+	public static void getCommonElements2(int[] one, int[] two) {
+		HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer>();
+		for (int val : one) {
+			hmap.put(val, hmap.getOrDefault(val, 0) + 1);
+		}
+
+		for (int val : two) {
+			if (hmap.containsKey(val)) {
+				System.out.print(val + " ");
+				hmap.put(val, hmap.get(val) - 1);
+			}
+
+			if (hmap.containsKey(val)) {
+				if (hmap.get(val) <= 0) {
+					hmap.remove(val);
+				}
+			}
+		}
+
+		System.out.println();
 	}
 
 	public static void highestFrequenceyCharacter(String word) {
