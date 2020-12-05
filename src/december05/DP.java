@@ -87,7 +87,7 @@ public class DP {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args){git st
 //        int[] dp = new int[100];
 //        System.out.print(staircase(5,dp) + " ");
 //        System.out.print(staircaseIter(5));
