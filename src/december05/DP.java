@@ -226,6 +226,190 @@ public class DP {
 		return dp[dp.length - 1];
 	}
 
+	public static int minJumps(int[] arr) {
+		int[] jumps = new int[arr.length];
+
+		jumps[0] = 0;
+
+		for (int i = 1; i < arr.length; i++) {
+			int min = Integer.MAX_VALUE;
+
+			for (int j = 0; j < i; j++) {
+				if (arr[j] >= i - j) {
+					min = Math.min(min, jumps[j] + 1);
+				}
+
+			}
+			jumps[i] = min;
+		}
+
+		for (int val : jumps) {
+			System.out.print(val + " ");
+		}
+
+		System.out.println();
+
+		return jumps[jumps.length - 1];
+	}
+
+	public static int Lis(int[] arr) {
+		int[] res = new int[arr.length];
+
+		res[0] = 1;
+		for (int i = 1; i < arr.length; i++) {
+			int max = Integer.MIN_VALUE;
+			for (int j = 0; j < i; j++) {
+				if (arr[j] < arr[i]) {
+					max = Math.max(res[j], max);
+				}
+			}
+
+			res[i] = max + 1;
+		}
+		int max = Integer.MIN_VALUE;
+		for (int val : res) {
+			max = Math.max(max, val);
+		}
+
+		return max;
+
+	}
+
+	public static void coinChangeCombination(int[] arr, int target) {
+		int[] strg = new int[target + 1];
+
+		strg[0] = 1;
+		for (int j = 0; j < arr.length; j++) {
+			for (int i = 0; i < strg.length; i++) {
+				if (i >= arr[j]) {
+					strg[i] += strg[i - arr[j]];
+				}
+			}
+		}
+
+		for (int val : strg) {
+			System.out.print(val + " ");
+		}
+	}
+
+	public static void coinChangePermutation(int[] arr, int target) {
+		int[] strg = new int[target + 1];
+
+		strg[0] = 1;
+		for (int i = 0; i < strg.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				if (i >= arr[j]) {
+					strg[i] += strg[i - arr[j]];
+				}
+			}
+		}
+
+		for (int val : strg) {
+			System.out.print(val + " ");
+		}
+	}
+
+	public static int lcsMemoised(String s1, String s2, Integer[][] qb) {
+
+		if (s1.length() == 0 || s2.length() == 0) {
+			return 0;
+		}
+
+		if (qb[s1.length()][s2.length()] != null) {
+			return qb[s1.length()][s2.length()];
+		}
+		char ch1 = s1.charAt(0);
+		char ch2 = s2.charAt(0);
+
+		String ros1 = s1.substring(1);
+		String ros2 = s2.substring(1);
+
+		int ans;
+		if (ch1 == ch2) {
+			ans = 1 + lcsMemoised(ros1, ros2, qb);
+		} else {
+			ans = Math.max(lcsMemoised(s1, ros2, qb), lcsMemoised(ros1, s2, qb));
+
+		}
+
+		qb[s1.length()][s2.length()] = ans;
+
+		return ans;
+	}
+
+	public static void Lcs(String first, String second) {
+		int[][] strg = new int[first.length() + 1][second.length() + 1];
+
+		for (int i = 0; i < strg.length; i++) {
+			for (int j = 0; j < strg[0].length; j++) {
+				if (i == 0) {
+					strg[i][j] = 0;
+				} else if (j == 0) {
+					strg[i][j] = 0;
+				} else {
+					if (first.charAt(i - 1) == second.charAt(j - 1)) {
+						strg[i][j] = strg[i - 1][j - 1] + 1;
+					} else {
+						strg[i][j] = Math.max(strg[i - 1][j], strg[i][j - 1]);
+					}
+				}
+			}
+		}
+
+		System.out.println(strg[strg.length - 1][strg[0].length - 1]);
+	}
+
+	public static int editDist(String str1, String str2, int m, int n) {
+		if (m == 0) {
+			return n;
+		}
+		if (n == 0) {
+			return m;
+		}
+		if (str1.charAt(m - 1) == str2.charAt(n - 1)) {
+			return editDist(str1, str2, m - 1, n - 1);
+		} else {
+			return 1 + Math.min(editDist(str1, str2, m, n - 1),
+					Math.min(editDist(str1, str2, m - 1, n - 1), editDist(str1, str2, m - 1, n - 1)));
+		}
+	}
+
+	public static int editDistTabulation(String str1, String str2, int m, int n) {
+		int[][] strg = new int[m + 1][n + 1];
+		for (int i = 0; i < strg.length; i++) {
+			for (int j = 0; j < strg[0].length; j++) {
+				if (i == 0) {
+					strg[i][j] = j;
+				} else if (j == 0) {
+					strg[i][j] = i;
+				} else {
+					if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+						strg[i][j] = strg[i - 1][j - 1];
+					} else {
+						strg[i][j] = Math.min(strg[i][j - 1], Math.min(strg[i - 1][j], strg[i - 1][j - 1])) + 1;
+					}
+				}
+			}
+		}
+
+		return strg[strg.length - 1][strg[0].length - 1];
+	}
+
+	public static void unboundedKnapsack(int[] wts, int[] price, int cap) {
+		int[] strg = new int[cap + 1];
+		strg[0] = 0;
+		for (int i = 1; i < strg.length; i++) {
+			int max = Integer.MIN_VALUE;
+			for (int j = 0; j < wts.length; j++) {
+				if (i - wts[j] >= 0) {
+					max = Math.max(max, strg[i - wts[j]] + price[j]);
+				}
+				strg[i] = max;
+			}
+		}
+		System.out.println(strg[strg.length - 1]);
+	}
+
 	public static void main(String[] args) {
 //        int[] dp = new int[100];
 //        System.out.print(staircase(5,dp) + " ");
@@ -256,8 +440,19 @@ public class DP {
 //		int[][] mine = { { 3, 2, 5, 8, 9, 5 }, { 5, 6, 3, 7, 9, 8 }, { 9, 1, 0, 5, 2, 1 }, { 2, 4, 7, 0, 9, 3 },
 //				{ 3, 0, 7, 6, 8, 2 }, { 8, 4, 3, 2, 2, 5 } };
 //		System.out.println(goldMine(mine))
-		int[] arr = {0,1,5,8,9,10,17,17,20};
-		System.out.println(rodCutting(arr));
+//		int[] arr = { 0, 1, 5, 8, 9, 10, 17, 17, 20 };
+//		System.out.println(rodCutting(arr));
+//		int[] arr = { 3, 2, 0, 2, 3, 1, 0, 1, 2, 0, 1 };
+//		System.out.println(minJumps(arr));
+//		int[] arr = { 10, 22, 9, 3, 21, 50, 41, 60, 80 };
+//		System.out.println(Lis(arr));
+
+//		int[] arr = { 2, 3, 5 };
+//		int target = 7;
+//		coinChangePermutation(arr, target);
+		Integer[][] arr = new Integer[8][8];
+		System.out.println(lcsMemoised("AGGTAB", "GXTXAYB", arr));
+		Lcs("AGGTAB", "GXTXAYB");
 	}
 
 }
