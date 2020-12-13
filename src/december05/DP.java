@@ -410,6 +410,143 @@ public class DP {
 		System.out.println(strg[strg.length - 1]);
 	}
 
+	public static int LongPalinSubsequenceTabul(String str) {
+		int[][] strg = new int[str.length()][str.length()];
+
+		for (int gap = 0; gap < str.length(); gap++) {
+			for (int i = 0, j = gap; j < str.length(); i++, j++) {
+				if (gap == 0) {
+					strg[i][j] = 1;
+				} else if (gap == 1) {
+					if (str.charAt(i) == str.charAt(j)) {
+						strg[i][j] = 2;
+					} else {
+						strg[i][j] = 1;
+					}
+				} else {
+					if (str.charAt(i) == str.charAt(j)) {
+						strg[i][j] = strg[i + 1][j - 1] + 2;
+					} else {
+						strg[i][j] = Math.max(strg[i][j - 1], strg[i + 1][j]);
+					}
+				}
+			}
+		}
+
+		return strg[0][str.length() - 1];
+	}
+
+	public static int LongPalinSubsMem(int sIdx, int eIdx, String str, int[][] dp) {
+		if (sIdx == eIdx) {
+			return 1;
+		}
+		if (sIdx > eIdx) {
+			return 0;
+		}
+
+		if (dp[sIdx][eIdx] != 0) {
+			return dp[sIdx][eIdx];
+		}
+
+		char ch1 = str.charAt(sIdx);
+		char ch2 = str.charAt(eIdx);
+		if (ch1 == ch2) {
+			return dp[sIdx][eIdx] = LongPalinSubsMem(sIdx + 1, eIdx - 1, str, dp) + 2;
+		} else {
+			return dp[sIdx][eIdx] = Math.max(LongPalinSubsMem(sIdx + 1, eIdx, str, dp),
+					LongPalinSubsMem(sIdx, eIdx - 1, str, dp));
+		}
+	}
+
+	public static boolean[][] LongestPalinSubstring(String str) {
+		boolean[][] strg = new boolean[str.length()][str.length()];
+		for (int gap = 0; gap < str.length(); gap++) {
+			for (int i = 0, j = gap; j < str.length(); i++, j++) {
+				if (gap == 0) {
+					strg[i][j] = true;
+				} else if (gap == 1) {
+					if (str.charAt(i) == str.charAt(j)) {
+						strg[i][j] = true;
+					} else {
+						strg[i][j] = false;
+					}
+				} else {
+					if (str.charAt(i) == str.charAt(j)) {
+						strg[i][j] = strg[i + 1][j - 1];
+						;
+					} else {
+						strg[i][j] = false;
+					}
+				}
+			}
+		}
+
+		outer: for (int gap = str.length() - 1; gap >= 0; gap--) {
+			for (int i = 0, j = gap; j < str.length(); i++, j++) {
+				if (strg[i][j]) {
+					System.out.println(str.substring(i, j + 1));
+					break outer;
+				}
+			}
+		}
+
+		return strg;
+
+	}
+
+	public static int minCutPalindrome(String str) {
+		int[][] strg = new int[str.length()][str.length()];
+
+		boolean[][] isPalin = LongestPalinSubstring(str);
+
+		for (int gap = 0; gap < str.length(); gap++) {
+			for (int i = 0, j = gap; j < str.length(); i++, j++) {
+				if (gap == 0) {
+					strg[i][j] = 0;
+				} else if (gap == 1) {
+					if (str.charAt(i) == str.charAt(j)) {
+						strg[i][j] = 0;
+					} else {
+						strg[i][j] = 1;
+					}
+				} else {
+					if (isPalin[i][j]) {
+						strg[i][j] = 0;
+					} else {
+						int min = Integer.MAX_VALUE;
+						for (int idash = i + 1, jdash = i; jdash < j; jdash++, idash++) {
+							min = Math.min(strg[i][jdash] + strg[idash][j], min);
+						}
+						strg[i][j] = min + 1;
+					}
+				}
+			}
+		}
+
+		return strg[0][strg.length - 1];
+	}
+
+	public static void mcm(int[] dims) {
+		int[][] strg = new int[dims.length - 1][dims.length - 1];
+		for (int gap = 0; gap < strg.length; gap++) {
+			for (int i = 0, j = gap; j < strg.length; i++, j++) {
+				if (gap == 0) {
+					strg[i][j] = 0;
+				} else if (gap == 1) {
+					strg[i][j] = dims[i] * dims[j] * dims[j + 1];
+				} else {
+					strg[i][j] = Integer.MAX_VALUE;
+					for (int idash = i + 1, jdash = i; jdash < j; idash++, jdash++) {
+						strg[i][j] = Math.min(strg[i][j],
+								strg[i][jdash] + strg[idash][j] + dims[i] * dims[jdash + 1] * dims[j + 1]);
+					}
+				}
+			}
+		}
+
+		System.out.println(strg[0][strg.length - 1]);
+	}
+
 	public static void main(String[] args) {
 //        int[] dp = new int[100];
 //        System.out.print(staircase(5,dp) + " ");
@@ -450,9 +587,17 @@ public class DP {
 //		int[] arr = { 2, 3, 5 };
 //		int target = 7;
 //		coinChangePermutation(arr, target);
-		Integer[][] arr = new Integer[8][8];
-		System.out.println(lcsMemoised("AGGTAB", "GXTXAYB", arr));
-		Lcs("AGGTAB", "GXTXAYB");
+//		Integer[][] arr = new Integer[8][8];
+//		System.out.println(lcsMemoised("AGGTAB", "GXTXAYB", arr));
+//		Lcs("AGGTAB", "GXTXAYB");
+//		String str = "GEEKSFORGEEKS";
+//		int[][] dp = new int[str.length()][str.length()];
+//		System.out.println(LongPalinSubsequenceTabul("GEEKSFORGEEKS"));
+//		System.out.println(LongPalinSubsMem(0, str.length() - 1, str, dp));
+//		LongestPalinSubstring("abccbc");
+//		System.out.println(minCutPalindrome("abccab"));
+		int[] arr = {40,20,30,10,30};
+		mcm(arr);
 	}
 
 }
