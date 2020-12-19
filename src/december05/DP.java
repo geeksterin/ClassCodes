@@ -158,7 +158,6 @@ public class DP {
                 else{
                     dp[i][j] = dp[i][j-1];
                 }
-
             }
         }
 
@@ -191,6 +190,12 @@ public class DP {
 
 //        System.out.print(knapSack01(weight,value,capacity,0,dp));
         System.out.print(knapSack01Iter(weight,value,capacity));
+
+
+
+
+
+
     }
 
 }
