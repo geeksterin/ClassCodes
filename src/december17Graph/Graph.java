@@ -5,6 +5,7 @@ import december3.HashMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public class Graph {
 
@@ -328,6 +329,90 @@ public class Graph {
 		}
 
 		visited.remove(s);
+	}
+
+	class Pair implements Comparable<Pair> {
+		String v;
+		String p;
+		int w;
+
+		public Pair(String v, String p, int w) {
+			this.v = v;
+			this.p = p;
+			this.w = w;
+		}
+
+		@Override
+		public int compareTo(Pair o) {
+//			Paheli h ye, iske likhne se ye hua h chota weight pehle pick hoga
+			return this.w - o.w;
+		}
+	}
+
+	public void dijkstra(String source) {
+		HashSet<String> visited = new HashSet<>();
+		PriorityQueue<Pair> pq = new PriorityQueue<Graph.Pair>();
+		pq.add(new Pair(source, source, 0));
+		while (pq.size() > 0) {
+			Pair rem = pq.remove();
+			if (visited.contains(rem.v)) {
+				continue;
+			}
+
+			visited.add(rem.v);
+			System.out.println(rem.v + " " + rem.p + " " + rem.w);
+			for (String nbr : graph.get(rem.v).keySet()) {
+				if (visited.contains(nbr) == false) {
+					pq.add(new Pair(nbr, rem.p + nbr, rem.w + graph.get(rem.v).get(nbr)));
+				}
+			}
+		}
+	}
+
+	class PPair implements Comparable<PPair> {
+		String v;
+		String av;
+		int aew;
+
+		PPair(String v, String av, int aew) {
+			this.v = v;
+			this.av = av;
+			this.aew = aew;
+		}
+
+		@Override
+		public int compareTo(PPair o) {
+			return this.aew - o.aew;
+		}
+	}
+
+	public Graph Prims() {
+		Graph mst = new Graph();
+		ArrayList<String> allvces = new ArrayList<>(graph.keySet());
+		HashSet<String> visited = new HashSet<>();
+		String s = allvces.get(0);
+		PriorityQueue<PPair> pq = new PriorityQueue<Graph.PPair>();
+		pq.add(new PPair(s, null, 0));
+		while (pq.size() > 0) {
+			PPair rem = pq.remove();
+			if (visited.contains(rem.v)) {
+				continue;
+			}
+//			System.out.println(rem.v);
+
+			if (rem.av != null) {
+				mst.addEdge(rem.v, rem.av, rem.aew);
+			}
+
+			visited.add(rem.v);
+			for (String nbr : graph.get(rem.v).keySet()) {
+				if (visited.contains(nbr) == false) {
+					pq.add(new PPair(nbr, rem.v, graph.get(rem.v).get(nbr)));
+				}
+			}
+		}
+
+		return mst;
 	}
 
 }
